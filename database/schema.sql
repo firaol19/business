@@ -1,0 +1,131 @@
+-- Database Schema for Business V2 (PHP)
+
+CREATE DATABASE IF NOT EXISTS business_php;
+USE business_php;
+
+-- Users
+CREATE TABLE IF NOT EXISTS User (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) DEFAULT 'user',
+    currencyCode VARCHAR(10) DEFAULT 'ETB',
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Personal Transactions
+CREATE TABLE IF NOT EXISTS PersonalTransaction (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    type VARCHAR(50) NOT NULL, -- income, expense
+    category VARCHAR(255) NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    paymentMethod VARCHAR(255),
+    transactionDate DATETIME NOT NULL,
+    note TEXT,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
+);
+
+-- Products
+CREATE TABLE IF NOT EXISTS Product (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    category VARCHAR(255),
+    status VARCHAR(50) DEFAULT 'wip', -- wip, finished, sold
+    startedAt DATETIME NOT NULL,
+    finishedAt DATETIME,
+    quantity INT DEFAULT 1,
+    quantityFinished INT DEFAULT 0,
+    quantitySold INT DEFAULT 0,
+    finalSellingPrice DECIMAL(15, 2),
+    clientName VARCHAR(255),
+    paymentStatus VARCHAR(50) DEFAULT 'unpaid', -- paid, partial, unpaid
+    description TEXT,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
+);
+
+-- Product Costs
+CREATE TABLE IF NOT EXISTS ProductCost (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    productId INT NOT NULL,
+    costType VARCHAR(50) NOT NULL, -- material, labor, transport, other
+    description VARCHAR(255),
+    amount DECIMAL(15, 2) NOT NULL,
+    incurredDate DATETIME NOT NULL,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (productId) REFERENCES Product(id) ON DELETE CASCADE
+);
+
+-- Product Sales
+CREATE TABLE IF NOT EXISTS ProductSale (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    productId INT NOT NULL,
+    quantity INT NOT NULL,
+    sellingPrice DECIMAL(15, 2) NOT NULL,
+    clientName VARCHAR(255),
+    description TEXT,
+    soldAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (productId) REFERENCES Product(id) ON DELETE CASCADE
+);
+
+-- Product Payments
+CREATE TABLE IF NOT EXISTS ProductPayment (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    productId INT NOT NULL,
+    amount DECIMAL(15, 2) NOT NULL,
+    paymentDate DATETIME NOT NULL,
+    method VARCHAR(50),
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (productId) REFERENCES Product(id) ON DELETE CASCADE
+);
+
+-- Saving Goals
+CREATE TABLE IF NOT EXISTS SavingGoal (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    targetAmount DECIMAL(15, 2) NOT NULL,
+    currentAmount DECIMAL(15, 2) DEFAULT 0,
+    targetDate DATETIME NOT NULL,
+    type VARCHAR(50) NOT NULL, -- emergency, business, personal
+    monthlyRequired DECIMAL(15, 2) DEFAULT 0,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
+);
+
+-- AI Analysis Logs
+CREATE TABLE IF NOT EXISTS AiAnalysisLog (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    analysisType VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
+);
+
+-- Business Expenses
+CREATE TABLE IF NOT EXISTS BusinessExpense (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    category VARCHAR(255) NOT NULL, -- rent, utilities, tools, marketing, other
+    description VARCHAR(255),
+    amount DECIMAL(15, 2) NOT NULL,
+    expenseDate DATETIME NOT NULL,
+    paymentMethod VARCHAR(255),
+    note TEXT,
+    createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
+);

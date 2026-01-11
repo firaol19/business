@@ -1,0 +1,202 @@
+/* Ported from globals.css */
+:root {
+    --background: #f8fafc;
+    --foreground: #0f172a;
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+    --secondary: #64748b;
+    --accent: #8b5cf6;
+    --card: #ffffff;
+    --card-foreground: #0f172a;
+    --border: #e2e8f0;
+    --ring: rgba(59, 130, 246, 0.5);
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+}
+
+body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism utility */
+.glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Modern Card */
+.modern-card {
+    background-color: white;
+    border-radius: 1rem;
+    /* rounded-2xl */
+    border: 1px solid rgba(226, 232, 240, 0.6);
+    /* border-slate-200/60 */
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    /* shadow-sm */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modern-card:hover {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    /* shadow-md */
+    border-color: rgba(203, 213, 225, 0.8);
+    /* border-slate-300/80 */
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Input styles (base styles, Tailwind handles the rest normally but we add defaults here for consistency) */
+input,
+select,
+textarea {
+    background-color: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.75rem;
+    /* rounded-xl */
+    padding: 0.625rem 1rem;
+    /* px-4 py-2.5 */
+    color: #334155;
+    /* text-slate-700 */
+    outline: none;
+    transition: all 0.2s;
+    width: 100%;
+    /* Default to full width generally */
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    background-color: white;
+}
+
+/* Table styles */
+.table-container {
+    overflow-x: auto;
+    border-radius: 0.75rem;
+    border: 1px solid #e2e8f0;
+    background-color: white;
+}
+
+table {
+    width: 100%;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: rgba(248, 250, 252, 0.5);
+    /* bg-slate-50/50 */
+    padding: 1rem 1.5rem;
+    /* px-6 py-4 */
+    font-size: 0.75rem;
+    /* text-xs */
+    font-weight: 600;
+    color: #64748b;
+    /* text-slate-500 */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    /* tracking-wider */
+    border-bottom: 1px solid #f1f5f9;
+    /* border-slate-100 */
+}
+
+td {
+    padding: 1rem 1.5rem;
+    font-size: 0.875rem;
+    /* text-sm */
+    color: #475569;
+    /* text-slate-600 */
+    border-bottom: 1px solid #f8fafc;
+    /* border-slate-50 */
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+/* Sidebar Specifics */
+.sidebar-link-active {
+    background-color: rgba(59, 130, 246, 0.1);
+    /* bg-primary/10 */
+    color: var(--primary);
+    font-weight: 500;
+}
+
+@media print {
+
+    nav,
+    header,
+    footer,
+    form,
+    button,
+    .no-print,
+    .print-hide,
+    aside,
+    [class*="sidebar"],
+    [class*="Sidebar"] {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        display: none !important;
+    }
+
+    h2 {
+        display: block !important;
+        margin-top: 20px;
+        margin-bottom: 10px;
+        font-size: 18px;
+        font-weight: bold;
+        color: #1a1a1a !important;
+    }
+
+    table {
+        display: table !important;
+        width: 100% !important;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+    }
+
+    .print-full-width,
+    .print-full-width>div {
+        display: block !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.animate-in { animation: fadeIn 0.5s ease-out; }
