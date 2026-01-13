@@ -1,7 +1,7 @@
 <?php
 $host = 'myfinance.com.et';
 $user = 'FIRAOL ';
-$pass = 'firaol@1995';
+$pass = '**********';
 $db   = 'business_php';
 
 $mysqli = new mysqli($host, $user, $pass, $db);
