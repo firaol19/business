@@ -1,6 +1,6 @@
 <?php
-$host = 'localhost';
-$user = 'root';
+$host = 'mysql-db02.remote:32636';
+$user = 'FIRAOL ';
 $pass = 'firaol@1995';
 $db   = 'business_php';
 
