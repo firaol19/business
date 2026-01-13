@@ -1,5 +1,5 @@
 <?php
-$host = 'mysql-db02.remote:32636';
+$host = 'myfinance.com.et';
 $user = 'FIRAOL ';
 $pass = 'firaol@1995';
 $db   = 'business_php';
